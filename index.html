@@ -1,0 +1,155 @@
+---
+layout: default
+numberPosts: 2
+---
+<!-- 
+<section class = "post-section">
+  <ul>
+
+    {% for category in site.categories %}
+
+      <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        {{category[0]}}
+      </li>
+
+    {% endfor %}
+
+  </ul>
+
+</section> -->
+
+
+<!--Navigation Bar -->
+      <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img src="assets/img/apollo_logo_color.png"></a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <div class="navbar-right">
+              <a class="navbar-brand" href="#">HOME</a>
+              <a class="navbar-brand" href="#">NEWS</a>
+              <a class="navbar-brand" href="#">ABOUT</a>
+              <a class="navbar-brand" href="#" style="color: #FF8130">SUBMIT A QUESTION</a>
+          </div>
+          </div><!--/.navbar-collapse -->
+        </div>
+      </nav>
+      <!--Navigation Bar End-->
+
+      <!--Jumbotron-->
+      <div class="jumbotron" style="padding-bottom: 0px">
+        <div class="container">
+          <div style="float:left; margin:2px; width: 100%; height: 50vh">
+            <div style="background:url('assets/img/rocket.png'); width:100%; height:100%; display:inline-block; background-repeat: no-repeat; background-position-x: 100%">
+              <h1 style="color: #FFF">Big questions.</h1>
+              <h1 style="color: #FF8130">Innovative answers.</h1>
+              <p>Apollo mixes a magical reading experience mixed with other cool stuff.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End Jumbotron-->
+
+      <!--Main section-->
+      <div class="container">
+        <section class = "post-section">
+
+          {% for tag in site.categories %} 
+            {% assign loopindex = forloop.index %}
+            <ul class="post-list">
+              <div class="row">
+                <div class="col-sm-1">
+                    <h1>Q</h1>
+                </div>
+                
+
+                {% assign pages_list = tag[1] %}  
+                {% for post in pages_list %}
+                  {% if post.title != null %}
+                  {% if group == null or group == post.group %}
+                  <div class="col-sm-6 blog-main">
+                    <div class="blog-post" style="height: auto">
+                      <a href="{{post.url}}"><h2 class="blog-post-title" style="font-style: italic">{{post.hook}}</h2></a>
+                      <p class="blog-post-meta">POSED BY <a href="#">THE APOLLO TEAM</a></p>
+                      <img style="width: 100%" src="assets/img/articles/{{post.hook_image_name}} ">
+                      <a href="#" class="btn btn-default" style="color:#FFF; background-color:#ed7e3a; border-color:#FFF; width: 100%">READ ANSWERS</a>
+                    </div>
+                  </div>
+                  <!-- <li><a href="{{ site.url }}{{ post.url }}">{{ post.title }}<span class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %d, %Y" }}</time></a></li> -->
+                  {% endif %}
+                  {% endif %}
+                {% endfor %}
+                {% assign pages_list = nil %}
+                {% assign group = nil %}
+
+                {% if loopindex == 1 %}
+                <!--Sidebar-->
+                <div class="col-sm-4 col-sm-offset-1 blog-sidebar">
+                  <blockquote>
+                    <h4>ARTICLES</h4>
+                    <ol class="list-unstyled" style="font-size:12px">
+                      <li><a href="#">Will the Trojan Family crumble without the Greek System?</a></li>
+                      <li><a href="#">Are USC students healthy?</a></li>
+                    </ol>
+
+                    <a href="#" class="btn btn-default" style="color:#FFF; background-color:#ed7e3a; border-color:#FFF; border-radius:25px; width: 75%">POSE A QUESTION</a>
+                  </blockquote>
+                </div>
+                <!--End sidebar-->
+                {% endif %}
+                
+              </div>
+            </ul>
+
+          {% endfor %}
+
+        </section>
+      </div>
+
+        <!--Sidebar-->
+          <!-- <div class="col-sm-4 col-sm-offset-1 blog-sidebar">
+            <blockquote>
+              <h4>ARTICLES</h4>
+              <ol class="list-unstyled" style="font-size:12px">
+                <li><a href="#">Will the Trojan Family crumble without the Greek System?</a></li>
+                <li><a href="#">Are USC students healthy?</a></li>
+              </ol>
+
+              <a href="#" class="btn btn-default" style="color:#FFF; background-color:#ed7e3a; border-color:#FFF; border-radius:25px; width: 75%">POSE A QUESTION</a>
+            </blockquote>
+          </div> -->
+          <!--End sidebar-->
+
+       <!--  <div class="row">
+          <div class="col-sm-1">
+            <h1>Q2</h1>
+          </div>
+          <div class="col-sm-6 blog-main">
+            <div class="blog-post" style="height: auto">
+              <a href="#"><h2 class="blog-post-title" style="font-style: italic">Are USC students healthy?</h2></a>
+              <p class="blog-post-meta">POSED BY <a href="#">THE APOLLO TEAM</a></p>
+              <img style="width: 100%" src="assets/img/articles/healthy.png">
+            <a href="#" class="btn btn-default" style="color:#FFF; background-color:#ed7e3a; border-color:#FFF; width: 100%">READ ANSWERS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+ -->
+      <!--Footer-->
+      <footer class="footer">
+        <div class="container">
+          <div style="margin:auto; text-align:center">
+            <img style="height: 2vh" src="assets/img/apollo_logo_grey.png">
+            <span class="text-muted">APOLLO // COPYRIGHT 2015</span>
+          </div>
+        </div>  
+      </footer>
+      <!--End Footer-->
