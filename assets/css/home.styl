@@ -1,0 +1,189 @@
+---
+layout: "stylus-hack"
+---
+
+$apollo-orange = #FF773F
+$blog-image-width = 330px
+
+@font-face
+    font-family 'Karla';
+    src url('/assets/fonts/karla/Karla-Regular.ttf') format('truetype');
+    font-weight normal;
+    font-style normal;
+
+@font-face
+    font-family 'Karla';
+    src url('/assets/fonts/karla/Karla-Italic.ttf') format('truetype');
+    font-weight normal;
+    font-style italic;
+
+@font-face
+    font-family 'Karla';
+    src url('/assets/fonts/karla/Karla-Bold.ttf') format('truetype');
+    font-weight bold;
+    font-style normal;
+
+@font-face
+    font-family 'Karla';
+    src url('/assets/fonts/karla/Karla-BoldItalic.ttf') format('truetype');
+    font-weight bold;
+    font-style italic;
+
+
+@font-face 
+    font-family Klinic Slab;
+    src url("/assets/fonts/klinicslab/KlinicSlab-Bold.otf");
+    font-weight bold
+    font-style normal
+
+@font-face 
+    font-family Klinic Slab;
+    src url("/assets/fonts/klinicslab/KlinicSlab-BoldItalic.otf");
+    font-weight bold
+    font-style italic
+
+@font-face 
+    font-family Klinic Slab;
+    src url("/assets/fonts/klinicslab/KlinicSlab-Light.otf");
+    font-weight lighter
+    font-style normal
+
+@font-face 
+    font-family Klinic Slab;
+    src url("/assets/fonts/klinicslab/KlinicSlab-LightItalic.otf");
+    font-weight lighter
+    font-style italic
+
+@font-face 
+    font-family Klinic Slab;
+    src url("/assets/fonts/klinicslab/KlinicSlab-Medium.otf");
+    font-weight normal
+    font-style normal
+
+@font-face 
+    font-family Klinic Slab;
+    src url("/assets/fonts/klinicslab/KlinicSlab-MediumItalic.otf");
+    font-weight normal
+    font-weight italic
+
+
+@font-face 
+    font-family San Francisco;
+    src url("/assets/fonts/SF-UI-Display-Ultralight.otf");
+    font-weight lighter
+    font-style normal
+
+
+@font-face
+    font-family Kursivschrift Stehend
+    src: url("/assets/fonts/KursivschriftStehend.ttf")
+
+
+a, a:hover, a:visited, a:link, a:active
+    text-decoration none
+    color #000
+
+div
+    font-family Karla
+
+.rocket
+    background url('/assets/img/rocket.png')
+    width 100%
+    height 100%
+    display inline-block
+    background-repeat  no-repeat
+    background-position-x 80%
+    font-family Klinic Slab
+
+.apollo-hype
+    margin-left 20%
+    font-family inherit
+
+.big-questions
+    color #FFF
+    font-family inherit
+    font-size 44px
+
+.innovative-answers
+    color #FF802F
+    font-family inherit
+    font-size 44px
+    margin-top -18px
+
+.splash-tagline
+    color white
+    font-family San Francisco
+    font-weight lighter
+    font-size 22px
+    width 350px
+
+.q
+    font-family Karla
+    font-weight bold
+    font-size 20px
+
+.hook-title
+    font-family Klinic Slab
+    font-weight 800
+    font-style italic
+    font-size 20px
+
+    color black
+
+.hook-title:hover
+    color black
+
+.blog-post
+    padding-top 20px
+
+.blog-post-image
+    width $blog-image-width
+
+.blog-main
+    padding-bottom 30px
+
+.blog-post-meta
+    font-family Karla
+
+.read-answers-button
+    margin-top 18px
+    padding-top 9px
+
+    text-align center
+    width $blog-image-width
+    height 35px
+
+    color #FFF
+    background-color $apollo-orange
+
+.read-answers-button:hover
+    text-decoration none
+
+.post-section
+    padding-bottom 150px
+
+.pose-a-question
+    font-size: 18px
+    color:#FFF
+    background-color:#FF773F
+
+    height: 50px
+    width: 75%
+    border-radius:25px
+    text-align: center
+    margin-left: 12%
+    padding-top 12px
+
+#navbar
+    font-family Karla
+    font-weight bold
+
+.no-small
+    display block
+
+@media screen and (max-width: 800px){
+    .no-small {
+        display: none
+    }
+}
+    

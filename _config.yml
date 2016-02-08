@@ -2,7 +2,7 @@
 description: "Apollo: USC's First Innovative Journalism Platform"
 url: http://apollo-test.org
 
-exclude: ['README.md', 'CNAME', 'Gemfile' ]
+exclude: ['README.md', 'CNAME', 'Gemfile']
 
 stylus:
   compress: true
