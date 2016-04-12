@@ -1,5 +1,7 @@
 ***Getting Started***
 
+After cloning and entering the repo, take the following steps to get started.
+
 Environment
 <pre>
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -25,7 +27,7 @@ CREATE USER postgres SUPERUSER;
 
 Populate the Database
 <pre>
-    python manage.py populate
+python manage.py populate
 </pre>
 
 Run the Server

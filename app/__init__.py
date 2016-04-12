@@ -25,7 +25,6 @@ def create_app():
         values = {}
         questions = Question.query.filter(Question.is_live==True).all()
         values["questions"] = questions
-        import pdb; pdb.set_trace()
         return render_template('index.html', **values)
 
     # Set up connection to DB
