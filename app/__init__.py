@@ -23,8 +23,9 @@ def create_app():
     @app.route("/")
     def index():
         values = {}
-        questions = Question.query.fitler(Question.is_live==True).all()
+        questions = Question.query.filter(Question.is_live==True).all()
         values["questions"] = questions
+        import pdb; pdb.set_trace()
         return render_template('index.html', **values)
 
     # Set up connection to DB

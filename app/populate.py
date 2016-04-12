@@ -68,6 +68,6 @@ def populate():
                 a = Post(**a_map)
                 db.session.add(a)
 
-        q.live = True
+        q.is_live = True
         db.session.add(q)
         db.session.commit()
