@@ -1,42 +1,125 @@
-# Apollo
-The Repository for Apollo, USC's first innovative journalism platform. Run by students that care.
+***Getting Started***
 
-***Jekyll***
+Environment
+<pre>
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install postgresql
+sudo easy_install pip
+pip install virtualenv
+virtualenv env
+. env/bin/activate 
+pip install -r requirements.txt
+</pre>
 
-Apollo is built on the jekyll. Jekyll is a static site generator that makes it easy to convert plain text files into styled web-pages, and was specifcally designed with blogs in mind. Static site generators look at files in a project repository and use the information in these files, as well as inputs from the user (developers), to prorammatically generate the desired HTML/CSS/JS files. Jekyll and other static site generators expect certain directory structures and files to be provided by the developer. All files and directories beginning with an underscore ('_') in this project are recognized by jekyll, and are used to help jekyll figure out how to construct the finalized html/css/js package. <code> jekyll build </code> will start this process, and will output the final package (the files that should be hosted on the live server) to the _site folder. For development, <code>jekyll serve</code> will serve the output files locally.
+Database
+<pre>
+pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+createdb apollo
+python manage.py db upgrade
 
-***Folders***
+// if postgres role does not exist:
+sudo -u {{psql_user}} psql techla
+CREATE USER postgres SUPERUSER;
+\q
+</pre>
 
-_includes contains html snippets that may be shared/consistant across multiple portions of the website (e.i. headers and footers).
+Populate the Database
+<pre>
+    python manage.py populate
+</pre>
 
-_layout defines the general structure of the blog's main types of pages: the default, the posts, and the general, non-post pages.
+Run the Server
+<pre>python run.py</pre>
 
-_site is the folder that jekyll output to compiled HTML/CSS/JS files to, and the files in this folder are what should be hosted on the server.
+***Application Structure***
+- app
+    - controllers
+    - models
+    - static
+    - templates
+    * __init__.py
+    * populate.py
+- env
+- migrations
+* manage.py
+* config.py
+* run.py
 
-_posts contains markdown files that contain the meta data and text content for each post. On build, jekyll generates HTML files for each of these posts. In the posts we specify the "category" that the post belongs to, and jekyll uses the information to determine the directory that the post ends up in in _site, and ultimately help jekyll determine the url of the post's html page.  
+**app**
+The app folder contains all of the application code. app/__init__.py is run when the app module is imported, and it defines the create_app() function, which follows the Factory method design pattern. This Factory method configures the api routes and template routes that the server will support, by hooking the app object up to code written in the contollers and templates folders.
 
-_pages contains the different general pages of the site.
+*contollers*
+The controllers folder is where we set up "blueprints". In Flask, blueprints help us write portable api code, and in this case we only have one blueprint, use to define the "/question" routes. We define all of the "/question" routes in this file, and connect the blueprint to the app object in app/__init__.py.
 
-_plugins
+The route functions defined in the "/question" routes have access to a <code>request</code> object supplied by Flask. These functions extract data from the request and interact with the database based on whether or not the route is intended to insert, delete, update or query for database objects.
 
-_includes
+*models*
+The models folder is where we define models to be used by the SQLAlchemy ORM (Object Relational Mapping). You can think of the orm as a wrapper around the database that abstracts away a bit of the relational logic and allows us to think about object. Each .py file in the models folder specficies the mapping for a different object that we will have a table for in the database. Most (probably all) objects that we have a table for in the database will need a .py file in the models folder. The objects we currently support are:
+- Question objects
+- Post objects
+- Comment objects
+- Vote Objects.
 
-***Front Matter***
+Question object have associated posts (yes, no maybe posts), Post objects have associated Comment objects, Comment objects have associated Vote objects.
+
+*templates*
+The templates folder contains Jinja templates. These are basically html files that have additional syntax allowing for more complex logic. We can pass data into a Jinja template, and render the template as an html file with this data included however we like. For example, we can pass a list of Question objects into a jinja template and render the list of questions.
+
+*static*
+This folder is where we store assets like css & js files and images. We static files in our templates using the url_for() method.
+
+*populate.py*
+This is a startup script that initializes the database with some dummy data for testing & prototyping.
+
+**env**
+This folder is generated by the command <code>virtualenv env</code>. Whenever we install dependencies (like when we run <code>pip install -r requirements.txt</code>), the will be installed to this folder. This is desireable, as it allows us to ensure that the development environments are consistant across the team. Any time you enter the apollo directory, you need to run <code>. env/bin/activate</code> to "enter" the virtual environment.
+
+**migrations**
+This folder stores all the migrations data for the database. Forunately, we do not need to write migrations manually. The manage.py files gives us access to a few commands that set up the postgresql database from the SQLAlchemy models defined in models.py. When first setting up the development environment, we run <code>python manage.py db init</code>, which creates the migrations folder. After that, whenever we update or add models to our app, we run <code>python manage.py db migrate</code>, which creates the migration file that contains the information about how to correctly update the database, and <code>python manage.py db upgrade</code>, which actually applies the migration.
+
+**config.py**
+This file defines config parameters for Testing, Development, and Production environments.
+
+**config.py**
+This file defines some useful commands:
+- python manage.py db init (sets up the migrations folder)
+- python manage.py db migrate (generates a migration file that describes changes in DB from previous migration)
+- python manage.py db upgrade (actually migrates the DB from current state to latest migration)
+- python manage.py populate (populates db with dummy data)
+
+**run.py**
+This file uses create_app to get an instance of an app object and starts the server. To start the server, run <code>python run.py</code>. Make sure you have the virtualenv activated!
 
 
-***Using Stylus***
+***Working with the ORM***
+To query object from the database, you will need to import the class from the models file. Example:
+<pre>
+from app.models import Post
+all_posts = Post.query.all()
+</pre>
 
-Stylus allows us to write more readable and effective styling for html pages. Ultimately, .styl files get compiled down to .css files, but make development more effective and fun! The stylus plugin used here transforms any .styl file to a .css file with the same location in the directory structure in the output directory. All style files need to have empty Front Matter.
+The all() and first() methods of the query object will return an array of all objects meeting the query and the first object meeting the query respectively. If there are no rows in the db matching the query, the functions will return the None type.
 
+To add on object to the database, you will need to import the <code>db</code> object from the models directory as well:
+<pre>
+from app.models import db, Comment
+new_comment_args = {
+    "contents": "I love this post!",
+    "post_id": 28 # This is the id of the post the comment is connected to,
+}
+comment = Comment(**new_comment_args)
+db.session.add(comment)
+db.session.commit()
+</pre>
 
-TODO for README.md:
-- Link to jeckyll docs in different places.
-- Link to Stylus docs.
-- Breifly Explain Front Matter.
-- Expand on folders section.
-- Breifly Explain CNAME.
-- Breifly Explain Gemfile
+Another example, querying with a filter and updating an object:
+<pre>
+from app.models import db, Post 
+post = Post.query.filter(Post.answer == "yes").first()
+post.author_first = "Awaycoolerfirstname"
+db.session.add(post)
+db.session.commit()
+</pre>
 
-General TODOS:
-- Test making pages
-- Integrate Joseph's index.html
+***Working with templates***
+Checkout the index route that is setup in app/__init__.py to see how to set up a template route and how to pass data from the db into the templates. Under the hood, Flask generates the html files on the fly using the data passed into the template with the render_template function provided by Flask.

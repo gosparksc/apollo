@@ -1,3 +1,5 @@
 CNAME
 .jekyll-metadata
 _site
+*.pyc
+env
