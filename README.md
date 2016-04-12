@@ -38,7 +38,7 @@ Run the Server
     - models
     - static
     - templates
-    * __init__.py
+    * \_\_init\_\_.py
     * populate.py
 - env
 - migrations
@@ -48,11 +48,11 @@ Run the Server
 
 **app**
 
-The app folder contains all of the application code. app/__init__.py is run when the app module is imported, and it defines the create_app() function, which follows the Factory method design pattern. This Factory method configures the api routes and template routes that the server will support, by hooking the app object up to code written in the contollers and templates folders.
+The app folder contains all of the application code. app/\_\_init\_\_.py is run when the app module is imported, and it defines the create_app() function, which follows the Factory method design pattern. This Factory method configures the api routes and template routes that the server will support, by hooking the app object up to code written in the contollers and templates folders.
 
 *contollers*
 
-The controllers folder is where we set up "blueprints". In Flask, blueprints help us write portable api code, and in this case we only have one blueprint, use to define the "/question" routes. We define all of the "/question" routes in this file, and connect the blueprint to the app object in app/__init__.py.
+The controllers folder is where we set up "blueprints". In Flask, blueprints help us write portable api code, and in this case we only have one blueprint, use to define the "/question" routes. We define all of the "/question" routes in this file, and connect the blueprint to the app object in app/\_\_init\_\_.py.
 
 The route functions defined in the "/question" routes have access to a <code>request</code> object supplied by Flask. These functions extract data from the request and interact with the database based on whether or not the route is intended to insert, delete, update or query for database objects.
 
@@ -90,7 +90,7 @@ This folder stores all the migrations data for the database. Forunately, we do n
 
 This file defines config parameters for Testing, Development, and Production environments.
 
-**config.py**
+**manage.py**
 
 This file defines some useful commands:
 - python manage.py db init (sets up the migrations folder)
@@ -136,4 +136,4 @@ db.session.commit()
 
 ***Working with templates***
 
-Checkout the index route that is setup in app/__init__.py to see how to set up a template route and how to pass data from the db into the templates. Under the hood, Flask generates the html files on the fly using the data passed into the template with the render_template function provided by Flask.
+Checkout the index route that is setup in app/\_\_init\_\_.py to see how to set up a template route and how to pass data from the db into the templates. Under the hood, Flask generates the html files on the fly using the data passed into the template with the render_template function provided by Flask.
